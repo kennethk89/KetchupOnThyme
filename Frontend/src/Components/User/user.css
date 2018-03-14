@@ -1,0 +1,23 @@
+.gMap {
+    border-width: 1px;
+    border-style: solid;
+    padding: 200px;
+    display: inline-block;
+}
+
+.apiBox {
+    border-width: 1px;
+    border-style: solid;
+    padding: 0px;
+    margin: 0px;
+}
+
+.apiData {
+    border-width: 1px;
+    border-style: solid;
+}
+
+.restoData {
+    border-width: 1px;
+    border-style: solid;
+}
