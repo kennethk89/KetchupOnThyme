@@ -6,11 +6,72 @@ import User from '../User'
 import Nav from '../Nav'
 import Home from '../Home'
 import Owner from '../Owner'
+import faker from 'faker'
+import axios from 'axios'
 
 class App extends Component {
-  state={
-    totalTables: 12,
-    tablesOccupied: 10
+  state = {
+    totalTables: 0,
+    occupiedTables: 0,
+    totalCapacity: 0,
+    currentCapacity: 0
+  }
+
+  makeRest = () => {
+    axios.post("http://localhost:8080/createRestaurant", {
+      name: (faker.fake("{{company.companyName}}")),
+      address: (faker.fake("{{address.streetAddress}}, {{address.city}}, {{address.zipCode}}")),
+      hours: '11am-9pm'
+    })
+      .then((response) => {
+        console.log(response)
+      })
+  }
+
+  makeTable = () => {
+    axios.post("http://localhost:8080/createTable", {
+      Restaurant_id: Math.ceil(Math.random() * 5),
+      total_pax: 6,
+      current_pax: Math.ceil(Math.random() * 6)
+    })
+      .then((response) => {
+        console.log(response)
+      })
+  }
+
+  componentWillMount() {
+    axios.get("http://localhost:8080")
+      .then((response) => {
+        console.log(response.data)
+
+        let tableCounter = 0
+        let occupiedCounter = 0
+
+        let totalCapacityJSX = response.data.map((table, i) => {
+          return table.total_pax
+        })
+        let currentCapacityJSX = response.data.map((table, i) => {
+          return table.current_pax
+        })
+        response.data.forEach((table, i) => {
+          if (table.current_pax !== 0) {
+            occupiedCounter++
+          }
+          return tableCounter++
+        })
+
+
+        this.setState({
+          totalCapacity: totalCapacityJSX.reduce((acc, cur) => {
+            return acc + cur
+          }, 0),
+          currentCapacity: currentCapacityJSX.reduce((acc, cur) => {
+            return acc + cur
+          }, 0),
+          totalTables: tableCounter,
+          occupiedTables: occupiedCounter
+        })
+      })
   }
 
   render() {
@@ -25,14 +86,23 @@ class App extends Component {
             <Route path='/user' render={() => {
               return <User />
             }} />
-            <Route path='/ops' render={() => {
-              return <Ops totalTables={this.state.totalTables}
-                          tablesOccupied={this.state.tablesOccupied} />
+            <Route path='/ops/:restId' render={(props) => {
+              return <Ops {...props}
+                totalTables={this.state.totalTables}
+                occupiedTables={this.state.occupiedTables}
+                totalCapacity={this.state.totalCapacity}
+                currentCapacity={this.state.currentCapacity} />
             }} />
-            <Route path='/owner' render={() => {
-              return <Owner totalTables={this.state.totalTables}
-                            tablesOccupied={this.state.tablesOccupied} />
+            <Route path='/owner/:restId' render={(props) => {
+              return <Owner {...props}
+                totalTables={this.state.totalTables}
+                occupiedTables={this.state.occupiedTables}
+                totalCapacity={this.state.totalCapacity}
+                currentCapacity={this.state.currentCapacity}
+                makeRest={this.makeRest}
+                makeTable={this.makeTable} />
             }} />
+
           </Switch>
         </div>
       </div>

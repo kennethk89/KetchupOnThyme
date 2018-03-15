@@ -10,12 +10,11 @@ exports.up = function (knex, Promise) {
                 .unique()
                 .notNullable()
             restaurants.string('hours')
-                .unique()
                 .notNullable()
         })
 
         .createTableIfNotExists('Tables', function (tables) {
-            tables.increments('table_id').primary();
+            tables.increments('id').primary();
             tables.timestamp('created_at').notNullable().defaultTo(knex.fn.now());
             tables.timestamp('updated_at').notNullable().defaultTo(knex.fn.now());
             tables

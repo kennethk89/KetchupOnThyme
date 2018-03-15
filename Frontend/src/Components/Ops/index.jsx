@@ -2,19 +2,20 @@ import React, { Component } from 'react';
 
 class Ops extends Component {
     render() {
+        const { restId } = this.props.match.params
         return (
             <div className="Ops">
                 <header className="Ops-header">
                     <h2 className="Ops-title">Operations Page</h2>
-                    <h5>Restaurant's Name</h5>
+                    <h5>Restaurant's Name, {restId}</h5>
                 </header>
 
                 <div className="restoInfo">
-                Total tables: {this.props.totalTables}
-                Tables occupied: {this.props.tablesOccupied}
+                    Total tables: {this.props.totalTables}
+                    Tables occupied: {this.props.occupiedTables}
 
-                Total capacity: 50
-                Current capacity: 37
+                    Total capacity: {this.props.totalCapacity}
+                    Current capacity: {this.props.currentCapacity}
                 </div>
 
                 <div>
