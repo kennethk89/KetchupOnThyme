@@ -50,6 +50,31 @@ app.post('/createRestaurant', (req, res) => {
         })
 })
 
+app.post('/restFilter', (req, res) => {
+
+    Restaurant
+        .where({ id: req.body.id })
+        .fetch({ withRelated: ['tables'] })
+        .then(restaurant => {
+
+        //use this data.. use it!!
+            let restaurantName = restaurant.attributes.name
+
+            let tablesArr = restaurant.related('tables').models.map((table) => {
+                return {
+                    id: table.attributes.id,
+                    Restaurant_id: table.attributes.Restaurant_id,
+                    total_pax: table.attributes.total_pax,
+                    current_pax: table.attributes.current_pax
+                }
+            })
+            res.json(tablesArr)
+        })
+
+})
+
+
+
 app.post('/createTable', (req, res) => {
     let newTable = new Table({
         Restaurant_id: req.body.Restaurant_id,
