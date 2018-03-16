@@ -50,18 +50,16 @@ app.post('/createRestaurant', (req, res) => {
         })
 })
 
-app.post('/restFilter', (req, res) => {
+app.post('/ownerFilter', (req, res) => {
 
     Restaurant
         .where({ id: req.body.id })
         .fetch({ withRelated: ['tables'] })
         .then(restaurant => {
 
-        //use this data.. use it!!
-            let restaurantName = restaurant.attributes.name
-
             let tablesArr = restaurant.related('tables').models.map((table) => {
                 return {
+                    name: restaurant.attributes.name,
                     id: table.attributes.id,
                     Restaurant_id: table.attributes.Restaurant_id,
                     total_pax: table.attributes.total_pax,
@@ -70,7 +68,25 @@ app.post('/restFilter', (req, res) => {
             })
             res.json(tablesArr)
         })
+})
 
+app.post('/opFilter', (req, res) => {
+    Restaurant
+        .where({ id: req.body.id })
+        .fetch({ withRelated: ['tables'] })
+        .then(restaurant => {
+
+            let tablesArr = restaurant.related('tables').models.map((table) => {
+                return {
+                    name: restaurant.attributes.name,
+                    id: table.attributes.id,
+                    Restaurant_id: table.attributes.Restaurant_id,
+                    total_pax: table.attributes.total_pax,
+                    current_pax: table.attributes.current_pax
+                }
+            })
+            res.json(tablesArr)
+        })
 })
 
 

@@ -60,7 +60,6 @@ class App extends Component {
           return tableCounter++
         })
 
-
         this.setState({
           totalCapacity: totalCapacityJSX.reduce((acc, cur) => {
             return acc + cur
@@ -73,6 +72,7 @@ class App extends Component {
         })
       })
   }
+
 
   render() {
     return (
@@ -87,20 +87,12 @@ class App extends Component {
               return <User />
             }} />
             <Route path='/ops/:restId' render={(props) => {
-              return <Ops {...props}
-                totalTables={this.state.totalTables}
-                occupiedTables={this.state.occupiedTables}
-                totalCapacity={this.state.totalCapacity}
-                currentCapacity={this.state.currentCapacity} />
+              return <Ops {...props} />
             }} />
             <Route path='/owner/:restId' render={(props) => {
               return <Owner {...props}
-                totalTables={this.state.totalTables}
-                occupiedTables={this.state.occupiedTables}
-                totalCapacity={this.state.totalCapacity}
-                currentCapacity={this.state.currentCapacity}
-                makeRest={this.makeRest}
-                makeTable={this.makeTable} />
+                            makeRest={this.makeRest}
+                            makeTable={this.makeTable} />
             }} />
 
           </Switch>

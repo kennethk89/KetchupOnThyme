@@ -1,95 +1,89 @@
 import React, { Component } from 'react';
+import axios from 'axios'
+import './ops.css'
 
 class Ops extends Component {
-    
+    state = {
+        opTotalTables: 0,
+        opOccupiedTables: 0,
+        opTotalCapacity: 0,
+        opCurrentCapacity: 0,
+        restaurantName: 'Restaurant Name',
+        tableInfo: []
+    }
+
+    componentWillMount() {
+        axios.post("http://localhost:8080/opFilter", {
+            id: this.props.match.params.restId
+        })
+            .then((response) => {
+                console.log(response.data)
+                let tableCounter = 0
+                let occupiedCounter = 0
+
+                let opCapacityJSX = response.data.map((table, i) => {
+                    return table.total_pax
+                })
+                let opOccupiedJSX = response.data.map((table, i) => {
+                    return table.current_pax
+                })
+                response.data.forEach((table, i) => {
+                    if (table.current_pax !== 0) {
+                        occupiedCounter++
+                    }
+                    return tableCounter++
+                })
+
+                this.setState({
+                    opTotalCapacity: opCapacityJSX.reduce((acc, cur) => {
+                        return acc + cur
+                    }, 0),
+                    opCurrentCapacity: opOccupiedJSX.reduce((acc, cur) => {
+                        return acc + cur
+                    }, 0),
+                    opTotalTables: tableCounter,
+                    opOccupiedTables: occupiedCounter,
+                    restaurantName: response.data[0].name,
+                    tableInfo: response.data
+                })
+            })
+    }
+
+    updateTable = () => {
+        console.log('update table')
+        //update the damn table
+    }
+
+    clearTable = () => {
+        console.log('clear table')
+        //reset the table pax to zero
+    }
+
     render() {
         const { restId } = this.props.match.params
         return (
             <div className="Ops">
                 <header className="Ops-header">
                     <h2 className="Ops-title">Operations Page</h2>
-                    <h5>Restaurant's Name, {restId}</h5>
+                    <h5>{this.state.restaurantName}, {restId}</h5>
                 </header>
 
                 <div className="restoInfo">
-                    Total tables: {this.props.totalTables}
-                    Tables occupied: {this.props.occupiedTables}
-
-                    Total capacity: {this.props.totalCapacity}
-                    Current capacity: {this.props.currentCapacity}
+                    <p className="info">Total tables: {this.state.opTotalTables}</p>
+                    <p className="info">Tables occupied: {this.state.opOccupiedTables}</p>
+                    <p className="info">Total capacity: {this.state.opTotalCapacity}</p>
+                    <p className="info">Current capacity: {this.state.opCurrentCapacity}</p>
                 </div>
-
-                <div>
-                    Table 1
-                    Size: 8
-                    Seated: 8
-                </div>
-
-                <div>
-                    Table 2
-                    Size: 8
-                    Seated: 7
-                </div>
-
-                <div>
-                    Table 3
-                    Size: 8
-                    Seated: 0
-                </div>
-
-                <div>
-                    Table 4
-                    Size: 4
-                    Seated: 4
-                </div>
-
-                <div>
-                    Table 5
-                    Size: 4
-                    Seated: 3
-                </div>
-
-                <div>
-                    Table 6
-                    Size: 4
-                    Seated: 4
-                </div>
-
-                <div>
-                    Table 7
-                    Size: 4
-                    Seated: 4
-                </div>
-
-                <div>
-                    Table 8
-                    Size: 2
-                    Seated: 0
-                </div>
-
-                <div>
-                    Table 9
-                    Size: 2
-                    Seated: 2
-                </div>
-
-                <div>
-                    Table 10
-                    Size: 2
-                    Seated: 1
-                </div>
-
-                <div>
-                    Table 11
-                    Size: 2
-                    Seated: 2
-                </div>
-
-                <div>
-                    Table 12
-                    Size: 2
-                    Seated: 2
-                </div>
+                <hr />
+                {this.state.tableInfo.map((table, i) => {
+                    return <div className = "tableDiv" key={i}>
+                        <p className="tableInfo">Table Number {table.id}</p>
+                        <p className="tableInfo">Size: {table.total_pax}</p>
+                        <p className="tableInfo">Seated: {table.current_pax}</p>
+                        <button onClick={this.updateTable}>Update table</button>
+                        <button onClick={this.clearTable}>Clear table</button>
+                    </div>
+                })}
 
             </div>
         );

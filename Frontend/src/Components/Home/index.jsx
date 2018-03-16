@@ -12,7 +12,7 @@ class Home extends Component {
                         Hi there, select your user profile:
                     </p>
                     <button><Link to='/user'>User</Link></button>
-                    <button><Link to='/ops'>Operations</Link></button>
+                    {/* <button><Link to='/ops'>Operations</Link></button> */}
                     <button><Link to='/owner'>Owner</Link></button>
                 </header>
             </div>
