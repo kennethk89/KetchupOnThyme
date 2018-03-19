@@ -103,6 +103,22 @@ app.post('/createTable', (req, res) => {
         })
 })
 
+//UPDATE
+app.put('/update', (req, res) => {
+    console.log(req.body.updatedPax)
+    console.log(req.body.tableId)
+    Table
+        .where({ id: req.body.id })
+        .save(updatedTasks, { patch: true })
+        .then((todo) => {
+            Todo.fetchAll()
+                .then(todos => {
+                    let newTodos = todos.models.map(todo => todo.attributes)
+                    res.json(newTodos)
+                })
+        })
+})
+
 //READ
 app.get('/', (req, res) => {
     Table.fetchAll()

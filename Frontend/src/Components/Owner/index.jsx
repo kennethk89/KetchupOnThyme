@@ -11,6 +11,7 @@ class Owner extends Component {
         owCurrentCapacity: 0
     }
 
+
     componentWillMount() {
         axios.post("http://localhost:8080/ownerFilter", {
             id: this.props.match.params.restId
@@ -54,7 +55,7 @@ class Owner extends Component {
                 <header className="Owner-header col-12">
                     <h2 className="Owner-title">Owner Page, {restId}</h2>
                 </header>
-                
+
                 <p className="ownerInfo">Your restaurant is currently {capPercent}% full</p>
                 <p className="ownerInfo">Total tables: {this.state.owTotalTables}</p>
                 <p className="ownerInfo">Tables occupied: {this.state.owOccupiedTables}</p>
@@ -63,7 +64,10 @@ class Owner extends Component {
                 <button onClick={this.props.makeRest}>make new restaurant</button>
                 <button onClick={this.props.makeTable}>get the table!</button>
 
-                <Link to={`/ops/${restId}`}><button>Go to ops</button></Link>
+                
+
+                <Link to={`/ops/${restId}`}><button className="waves-effect waves-light btn">Go to ops</button></Link>
+
             </div>
         );
     }

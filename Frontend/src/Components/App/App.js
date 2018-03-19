@@ -78,7 +78,7 @@ class App extends Component {
     return (
       <div className="App">
         <Nav />
-        <div>
+        <div className= "container">
           <Switch>
             <Route exact path='/' render={() => {
               return <Home />
