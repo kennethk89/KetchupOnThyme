@@ -75,7 +75,6 @@ app.post('/opFilter', (req, res) => {
         .where({ id: req.body.id })
         .fetch({ withRelated: ['tables'] })
         .then(restaurant => {
-
             let tablesArr = restaurant.related('tables').models.map((table) => {
                 return {
                     name: restaurant.attributes.name,
@@ -103,22 +102,6 @@ app.post('/createTable', (req, res) => {
         })
 })
 
-//UPDATE
-app.put('/update', (req, res) => {
-    console.log(req.body.updatedPax)
-    console.log(req.body.tableId)
-    Table
-        .where({ id: req.body.id })
-        .save(updatedTasks, { patch: true })
-        .then((todo) => {
-            Todo.fetchAll()
-                .then(todos => {
-                    let newTodos = todos.models.map(todo => todo.attributes)
-                    res.json(newTodos)
-                })
-        })
-})
-
 //READ
 app.get('/', (req, res) => {
     Table.fetchAll()
@@ -129,4 +112,34 @@ app.get('/', (req, res) => {
 
 app.listen(8080, () => {
     console.log('listening on 8080')
+})
+
+//UPDATE
+app.put('/update', (req, res) => {
+    console.log(req.body.updatedPax)
+    console.log(req.body.tableId)
+    console.log(req.body.restId)
+    let updateSeats = {
+        current_pax: req.body.updatedPax
+    }
+    Table
+        .where({ id: req.body.tableId })
+        .save(updateSeats, { patch: true })
+        .then((table) => {
+            res.json(table.attributes)
+        })
+})
+
+//DELETE
+app.put('/clear', (req, res) => {
+    console.log(req.body.tableId)
+    let clearTable = {
+        current_pax: 0
+    }
+    Table
+        .where({ id: req.body.tableId })
+        .save(clearTable, {patch: true})
+        .then((table)=>{
+            res.json(table.attributes)
+        })
 })

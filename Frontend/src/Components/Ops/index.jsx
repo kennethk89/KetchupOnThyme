@@ -49,28 +49,101 @@ class Ops extends Component {
       })
   }
 
-  updateTable = (x,y) => {
+  updateTable = (x,y,z,i) => {
     console.log('update table')
-    console.log(`updated pax: ${x}, table id: ${y}`)
-    //backend functions
+    console.log(`updated pax: ${x}, table id: ${y}, restaurant id: ${z}`)
     axios.put("http://localhost:8080/update", {
       updatedPax: x,
-      tableId: y
+      tableId: y,
+      restId: z
     })
-      // .then((response) => {
-      //   this.setState({
-      //     toDos: response.data
-      //   })
-      // })
+      .then((response) => {
+        this.state.tableInfo[i].current_pax = response.data.current_pax
+        // this.setState({
+        //   tableInfo: this.state.tableInfo,
+        // })
+        axios.post("http://localhost:8080/opFilter", {
+          id: this.props.match.params.restId
+        })
+          .then((response) => {
+            console.log(response.data)
+            let tableCounter = 0
+            let occupiedCounter = 0
+
+            let opCapacityJSX = response.data.map((table, i) => {
+              return table.total_pax
+            })
+            let opOccupiedJSX = response.data.map((table, i) => {
+              return table.current_pax
+            })
+            response.data.forEach((table, i) => {
+              if (table.current_pax !== 0) {
+                occupiedCounter++
+              }
+              return tableCounter++
+            })
+
+            this.setState({
+              // opTotalCapacity: opCapacityJSX.reduce((acc, cur) => {
+              //   return acc + cur
+              // }, 0),
+              opCurrentCapacity: opOccupiedJSX.reduce((acc, cur) => {
+                return acc + cur
+              }, 0),
+              // opTotalTables: tableCounter,
+              opOccupiedTables: occupiedCounter,
+              // restaurantName: response.data[0].name,
+              // tableInfo: response.data
+            })
+          })
+      })
   }
 
-  clearTable = (y) => {
+  clearTable = (y,i) => {
     console.log('clear table')
     console.log(`table id: ${y}`)
-    //reset the table pax to zero
+    axios.put("http://localhost:8080/clear", {
+      tableId: y
+    })
+    .then((response)=>{
+      console.log(response.data.current_pax)
+      this.state.tableInfo[i].current_pax = response.data.current_pax
+      // this.setState({
+      //   tableInfo: this.state.tableInfo
+      // })
+      axios.post("http://localhost:8080/opFilter", {
+        id: this.props.match.params.restId
+      })
+        .then((response) => {
+          console.log(response.data)
+          let tableCounter = 0
+          let occupiedCounter = 0
+
+          let opCapacityJSX = response.data.map((table, i) => {
+            return table.total_pax
+          })
+          let opOccupiedJSX = response.data.map((table, i) => {
+            return table.current_pax
+          })
+          response.data.forEach((table, i) => {
+            if (table.current_pax !== 0) {
+              occupiedCounter++
+            }
+            return tableCounter++
+          })
+
+          this.setState({
+            opCurrentCapacity: opOccupiedJSX.reduce((acc, cur) => {
+              return acc + cur
+            }, 0),
+            opOccupiedTables: occupiedCounter,
+          })
+        })
+    })
   }
 
   render() {
+    console.log(this.state.tableInfo)
     const { restId } = this.props.match.params
     return (
       <div className="Ops">
@@ -88,10 +161,13 @@ class Ops extends Component {
 
 
         <div className="row">
+        {/* homes.sort((a, b) => parseFloat(a.price) - parseFloat(b.price)); */}
+        {/* {this.state.tableInfo.sort((a, b) => parseFloat(a.id) - parseFloat(b.id))} */}
+  
           {this.state.tableInfo.map((table, i) => {
             let selector = 0
             let totalTablesJSX = [
-              <option disabled key="0">Select current table capacity</option>,
+              <option default key="0">Current Seats</option>,
             ]
             for (let j = 1; j <= table.total_pax; j++) {
               totalTablesJSX.push(<option value={j} key={j}>{j}</option>)
@@ -108,16 +184,15 @@ class Ops extends Component {
                     <p>Seated: {table.current_pax}</p>
                     <label>Update seating</label>
 
-                    {/* SOLVE THIS!! */}
                     <select ref={self => this[`${i}${selector}`] = self}
                       className="browser-default tableFunctions black-text"
-                      onChange={() => { this.updateTable(this[`${i}${selector}`].value, table.id) }} >
+                      onChange={() => { this.updateTable(this[`${i}${selector}`].value, table.id, restId, i) }}
+                       >
+
                       {totalTablesJSX}
                     </select>
 
-                    {/* <button onClick={() => { this.updateTable(this[`${i}${selector}`].value)}} className="waves-effect waves-light btn">Update seating</button> */}
-
-                    <button className="waves-effect waves-light btn" onClick={()=>{this.clearTable(table.id)}} >Clear table</button>
+                    <button className="waves-effect waves-light btn" onClick={()=>{this.clearTable(table.id, i)}} >Clear table</button>
 
 
                   </div>

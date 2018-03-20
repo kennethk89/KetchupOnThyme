@@ -12,7 +12,7 @@ class Owner extends Component {
     }
 
 
-    componentWillMount() {
+    componentWillUpdate() {
         axios.post("http://localhost:8080/ownerFilter", {
             id: this.props.match.params.restId
         })
