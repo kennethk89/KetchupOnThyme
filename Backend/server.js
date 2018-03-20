@@ -51,7 +51,6 @@ app.post('/createRestaurant', (req, res) => {
 })
 
 app.post('/ownerFilter', (req, res) => {
-
     Restaurant
         .where({ id: req.body.id })
         .fetch({ withRelated: ['tables'] })
@@ -138,8 +137,8 @@ app.put('/clear', (req, res) => {
     }
     Table
         .where({ id: req.body.tableId })
-        .save(clearTable, {patch: true})
-        .then((table)=>{
+        .save(clearTable, { patch: true })
+        .then((table) => {
             res.json(table.attributes)
         })
 })
