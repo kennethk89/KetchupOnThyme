@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import './ops.css'
-import Table from '../Table'
 
 class Ops extends Component {
   state = {
@@ -145,7 +144,7 @@ class Ops extends Component {
           <p className="info">Current capacity: {this.state.opCurrentCapacity}</p>
         </div>
 
-
+ 
         <div className="row">
 
           {this.state.tableInfo.map((table, i) => {
@@ -158,8 +157,7 @@ class Ops extends Component {
               selector = j;
             }
 
-            let cardColor = (table.current_pax / table.total_pax === 1) ? "#b71c1c red darken-4" : (table.current_pax/table.total_pax <0.8 ) ?
-              "blue - grey darken-2" : "#ffc400 amber accent-3"
+            let cardColor = (table.current_pax / table.total_pax === 1) ? "#b71c1c red darken-4" : (table.current_pax/table.total_pax === 0 ) ? "#1b5e20 green darken-4" : "#ffc400 amber accent-4"
 
             return <div key={i}>
               <div className="col s12 m6 l4">

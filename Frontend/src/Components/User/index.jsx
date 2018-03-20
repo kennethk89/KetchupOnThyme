@@ -4,7 +4,7 @@ import './user.css'
 import axios from 'axios'
 
 const style = {
-    width: '35%',
+    width: '43%',
     height: '70%'
 }
 
@@ -14,7 +14,9 @@ class User extends Component {
         coordinates: {
             lat: 49.2827,
             lng: -123.1207
-        }
+        },
+        yelpRating: 0,
+        
     }
 
     searchBar = (e) => {
@@ -23,13 +25,19 @@ class User extends Component {
         })
     }
 
-
     handleSearch = (searchLocation) => {
-
+        console.log(searchLocation)
         axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.coordinates.lat},${this.state.coordinates.lng}&radius=50000&keyword=${searchLocation}&key=AIzaSyA2I6XCDGejIIrmrgMA0mLwKGOYQbGC-pg`)
             .then((res) => {
-                console.log(res.data.results[0].geometry.location)
-
+                axios.post('http://localhost:8080/yelpSearch', {
+                    searchLocation: searchLocation,
+                    coordinates: res.data.results[0].geometry.location
+                })
+                .then((response)=>{
+                    this.setState({
+                        yelpRating: response.data
+                    })
+                })
                 this.setState({
                     coordinates: res.data.results[0].geometry.location,
                     searchLocation: ''
@@ -37,18 +45,16 @@ class User extends Component {
             })
     }
 
-
     render() {
-        console.log(this.state.coordinates)
         return (
             <div className="User">
-
                 <div className="row">
                     <header className="col s12 m12 l12">
                         <h2 className="User-title">User Page</h2>
                     </header>
 
                     <label>Search for Restaurants</label>
+
                     <input type="text" value={this.state.searchLocation} onChange={this.searchBar} onKeyDown={(e) => { if (e.keyCode === 13) this.handleSearch(this.state.searchLocation) }}>
                     </input>
 
@@ -59,10 +65,12 @@ class User extends Component {
                                 lat: this.state.coordinates.lat,
                                 lng: this.state.coordinates.lng
                             }}>
-                            {/* <Marker
-                                title={'The marker`s title will appear as a tooltip.'}
-                                name={'SOMA'}
-                                position={this.state.coordinates} /> */}
+
+                            <Marker
+                                name={'Your position'}
+                                position={{ lat: 49.28306734995162, lng: -123.11726121971797 }}
+                                 />
+
                             <Marker
                                 name={'Dolores park'}
                                 position={this.state.coordinates} />
@@ -72,7 +80,7 @@ class User extends Component {
                     <div className="apiBox col s12 m6 l6">
                         <div className="apiData col s12 m12 l12">
                             Google's rating:___ <br />
-                            Yelp's rating:___ <br />
+                            Yelp's rating: {this.state.yelpRating} <br />
                             Zomato's rating:___
                         </div>
 
@@ -83,9 +91,7 @@ class User extends Component {
                             ___ tables of ___ available,<br />
                         </div>
                     </div>
-
                 </div>
-
             </div>
         );
     }

@@ -10,6 +10,9 @@ const knex = require('knex')({
     }
 })
 const bookshelf = require('bookshelf')(knex)
+const yelp = require('yelp-fusion');
+const client = yelp.client('RaYrtt0iSkBHwTvsj40uxo0hg8tLulmiyg9EpnPaXM14FG4foZ-j91rhiCLUiSma3VNKpHF0kyRBfeNFHwTdTyV4jJu2brk9M5aCwEElkCR0aYA_NrSRStAWzHOxWnYx');
+
 
 const Restaurant = bookshelf.Model.extend({
     tableName: 'Restaurants',
@@ -141,4 +144,20 @@ app.put('/clear', (req, res) => {
         .then((table) => {
             res.json(table.attributes)
         })
+})
+
+//YELP REVIEWS
+app.post('/yelpSearch', (req, res) => {
+    client.search({
+        term: `${req.body.searchLocation}`,
+        location: 'vancouver'
+    }).then(response => {
+        client.business(`${response.jsonBody.businesses[0].id}`).then(response => {
+            res.json(response.jsonBody.rating)
+        }).catch(e => {
+            console.log(e);
+        });
+    }).catch(e => {
+        console.log(e);
+    });
 })
