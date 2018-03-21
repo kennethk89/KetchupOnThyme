@@ -4,7 +4,7 @@ import './user.css'
 import axios from 'axios'
 
 const style = {
-    width: '43%',
+    width: '35%',
     height: '70%'
 }
 
@@ -31,7 +31,6 @@ class User extends Component {
             .then((res) => {
                 axios.post('http://localhost:8080/yelpSearch', {
                     searchLocation: searchLocation,
-                    coordinates: res.data.results[0].geometry.location
                 })
                 .then((response)=>{
                     this.setState({
@@ -49,9 +48,9 @@ class User extends Component {
         return (
             <div className="User">
                 <div className="row">
-                    <header className="col s12 m12 l12">
+                    <div className="col s12 m12 l12">
                         <h2 className="User-title">User Page</h2>
-                    </header>
+                    </div>
 
                     <label>Search for Restaurants</label>
 
@@ -66,22 +65,21 @@ class User extends Component {
                                 lng: this.state.coordinates.lng
                             }}>
 
-                            <Marker
+                            {/* <Marker
                                 name={'Your position'}
                                 position={{ lat: 49.28306734995162, lng: -123.11726121971797 }}
-                                 />
+                                 /> */}
 
                             <Marker
                                 name={'Dolores park'}
-                                position={this.state.coordinates} />
+                                position={this.state.coordinates}
+                                 />
                         </Map>
                     </div>
 
                     <div className="apiBox col s12 m6 l6">
                         <div className="apiData col s12 m12 l12">
-                            Google's rating:___ <br />
-                            Yelp's rating: {this.state.yelpRating} <br />
-                            Zomato's rating:___
+                            Yelp's rating: {this.state.yelpRating}
                         </div>
 
                         <div className="restoData col s12 m12 l12">

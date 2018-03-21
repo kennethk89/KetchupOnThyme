@@ -49,7 +49,6 @@ class Owner extends Component {
     render() {
         const { restId } = this.props.match.params
         const capPercent = Math.ceil((this.state.owCurrentCapacity / this.state.owTotalCapacity) * 100)
-
         return (
             <div className="owner">
                 <header className="Owner-header col-12">
@@ -64,12 +63,10 @@ class Owner extends Component {
                 <button onClick={this.props.makeRest}>make new restaurant</button>
                 <button onClick={this.props.makeTable}>get the table!</button>
 
-                
-
                 <Link to={`/ops/${restId}`}><button className="waves-effect waves-light btn">Go to ops</button></Link>
 
             </div>
-        );
+        )
     }
 }
 

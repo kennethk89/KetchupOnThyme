@@ -116,6 +116,13 @@ app.listen(8080, () => {
     console.log('listening on 8080')
 })
 
+app.get('/getRestaurants', (req, res) => {
+    Restaurant.fetchAll()
+        .then(restaurants => {
+            res.json(restaurants.models.map(restaurant => restaurant.attributes))
+        })
+})
+
 //UPDATE
 app.put('/update', (req, res) => {
     console.log(req.body.updatedPax)
@@ -146,12 +153,13 @@ app.put('/clear', (req, res) => {
         })
 })
 
-//YELP REVIEWS
+//YELP RATING
 app.post('/yelpSearch', (req, res) => {
     client.search({
         term: `${req.body.searchLocation}`,
         location: 'vancouver'
     }).then(response => {
+        console.log(response.jsonBody.businesses[0])
         client.business(`${response.jsonBody.businesses[0].id}`).then(response => {
             res.json(response.jsonBody.rating)
         }).catch(e => {
@@ -161,3 +169,5 @@ app.post('/yelpSearch', (req, res) => {
         console.log(e);
     });
 })
+
+//ZOMATO RATING

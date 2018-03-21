@@ -8,6 +8,7 @@ import Home from '../Home'
 import Owner from '../Owner'
 import faker from 'faker'
 import axios from 'axios'
+import OwnerNav from '../OwnerNav'
 
 class App extends Component {
   state = {
@@ -94,7 +95,11 @@ class App extends Component {
                             makeRest={this.makeRest}
                             makeTable={this.makeTable} />
             }} />
-
+            <Route exact path='/owner' render={() => {
+              return <OwnerNav
+                makeRest={this.makeRest}
+                makeTable={this.makeTable} />
+            }} />
           </Switch>
         </div>
       </div>
