@@ -96,9 +96,7 @@ class App extends Component {
                             makeTable={this.makeTable} />
             }} />
             <Route exact path='/owner' render={() => {
-              return <OwnerNav
-                makeRest={this.makeRest}
-                makeTable={this.makeTable} />
+              return <OwnerNav />
             }} />
           </Switch>
         </div>

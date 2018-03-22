@@ -15,9 +15,15 @@
 .apiData {
     border-width: 1px;
     border-style: solid;
+    margin-bottom: 10px;
 }
 
 .restoData {
     border-width: 1px;
     border-style: solid;
+}
+
+.yelpInfo {
+    margin: 0px;
+    font-weight: bold;
 }

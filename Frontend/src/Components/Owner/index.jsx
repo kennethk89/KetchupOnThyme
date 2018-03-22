@@ -12,7 +12,41 @@ class Owner extends Component {
     }
 
 
-    componentWillUpdate() {
+    componentWillMount() {
+        axios.post("http://localhost:8080/ownerFilter", {
+            id: this.props.match.params.restId
+        })
+            .then((response) => {
+                let tableCounter = 0
+                let occupiedCounter = 0
+
+                let ownerCapacityJSX = response.data.map((table, i) => {
+                    return table.total_pax
+                })
+                let ownerOccupiedJSX = response.data.map((table, i) => {
+                    return table.current_pax
+                })
+                response.data.forEach((table, i) => {
+                    if (table.current_pax !== 0) {
+                        occupiedCounter++
+                    }
+                    return tableCounter++
+                })
+
+                this.setState({
+                    owTotalCapacity: ownerCapacityJSX.reduce((acc, cur) => {
+                        return acc + cur
+                    }, 0),
+                    owCurrentCapacity: ownerOccupiedJSX.reduce((acc, cur) => {
+                        return acc + cur
+                    }, 0),
+                    owTotalTables: tableCounter,
+                    owOccupiedTables: occupiedCounter
+                })
+            })
+    }
+
+    componentDidUpdate() {
         axios.post("http://localhost:8080/ownerFilter", {
             id: this.props.match.params.restId
         })
@@ -60,8 +94,9 @@ class Owner extends Component {
                 <p className="ownerInfo">Tables occupied: {this.state.owOccupiedTables}</p>
                 <p className="ownerInfo">Total capacity: {this.state.owTotalCapacity}</p>
                 <p className="ownerInfo">Current capacity: {this.state.owCurrentCapacity}</p>
-                <button onClick={this.props.makeRest}>make new restaurant</button>
-                <button onClick={this.props.makeTable}>get the table!</button>
+                
+                {/* <button onClick={this.props.makeRest}>make new restaurant</button>
+                <button onClick={this.props.makeTable}>get the table!</button> */}
 
                 <Link to={`/ops/${restId}`}><button className="waves-effect waves-light btn">Go to ops</button></Link>
 

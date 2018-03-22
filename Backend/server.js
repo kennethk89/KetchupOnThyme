@@ -112,14 +112,23 @@ app.get('/', (req, res) => {
         })
 })
 
-app.listen(8080, () => {
-    console.log('listening on 8080')
-})
-
 app.get('/getRestaurants', (req, res) => {
     Restaurant.fetchAll()
         .then(restaurants => {
             res.json(restaurants.models.map(restaurant => restaurant.attributes))
+        })
+})
+
+app.post('/getTables', (req, res)=>{
+    console.log(req.body.name)
+    Restaurant
+        .where({name: req.body.name})
+        .fetch({withRelated: ['tables']})
+        .then((restaurant)=>{
+            let allTables = restaurant.relations.tables.models.map((table)=>{
+                return table.attributes
+            })
+            res.json(allTables)
         })
 })
 
@@ -159,9 +168,9 @@ app.post('/yelpSearch', (req, res) => {
         term: `${req.body.searchLocation}`,
         location: 'vancouver'
     }).then(response => {
-        console.log(response.jsonBody.businesses[0])
         client.business(`${response.jsonBody.businesses[0].id}`).then(response => {
-            res.json(response.jsonBody.rating)
+            console.log(response.jsonBody)
+            res.json(response.jsonBody)
         }).catch(e => {
             console.log(e);
         });
@@ -170,4 +179,11 @@ app.post('/yelpSearch', (req, res) => {
     });
 })
 
-//ZOMATO RATING
+
+
+
+
+
+app.listen(8080, () => {
+    console.log('listening on 8080')
+})

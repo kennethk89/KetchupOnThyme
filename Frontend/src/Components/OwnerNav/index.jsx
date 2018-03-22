@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import './ownerNav.css'
 
 class OwnerNav extends Component {
   state = {
@@ -19,13 +20,15 @@ class OwnerNav extends Component {
 
   render() {
     let restaurantsJSX = this.state.restaurants.map((restaurant, i) => {
-      return <div><Link to={`/owner/${restaurant.id}/`}>{restaurant.name}</Link></div>
+      return <div className="indvButton"><a className="waves-effect grey darken-3 btn"><i class="material-icons left">local_dining</i><Link to={`/owner/${restaurant.id}/`}>{restaurant.name}</Link></a></div >
     })
-    
-    return (
 
-      <div className="owner">
-        {restaurantsJSX}
+    return (
+      <div className="ownerNav">
+        <h3>Choose Your Restaurant</h3>
+        
+          {restaurantsJSX}
+        
       </div>
     )
   }
