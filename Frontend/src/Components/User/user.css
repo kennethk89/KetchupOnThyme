@@ -27,3 +27,15 @@
     margin: 0px;
     font-weight: bold;
 }
+
+.iconRed {
+    color: #b71c1c;
+}
+
+.iconGreen {
+    color: #1b5e20;
+}
+
+.iconYellow {
+    color: #ffc400;
+}

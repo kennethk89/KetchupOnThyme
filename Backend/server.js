@@ -125,6 +125,7 @@ app.post('/getTables', (req, res)=>{
         .where({name: req.body.name})
         .fetch({withRelated: ['tables']})
         .then((restaurant)=>{
+            console.log(restaurant.attributes)
             let allTables = restaurant.relations.tables.models.map((table)=>{
                 return table.attributes
             })

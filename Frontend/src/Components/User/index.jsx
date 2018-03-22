@@ -34,45 +34,39 @@ class User extends Component {
     handleSearch = (searchLocation) => {
 
         console.log(this.state.allRestaurants)
-        if (this.state.restaurantNames.includes(searchLocation) === true) {
+        //!!!!!!!!!!!!!!!
+        if (this.state.restaurantNames.includes(searchLocation) 
+        //!!!!!!!!!!!!!!!
+        === true) {
             console.log('hi there')
             axios.post("http://localhost:8080/getTables", {
                 name: searchLocation
             })
                 .then((response) => {
                     console.log(response.data)
-
-                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                     let tableCounter = 0
                     let occupiedCounter = 0
 
-                    let capacityJSX = response.data.map((table, i) => {
-                        return table.total_pax
-                    })
-                    let occupiedJSX = response.data.map((table, i) => {
-                        return table.current_pax
-                    })
                     response.data.forEach((table, i) => {
                         if (table.current_pax !== 0) {
                             occupiedCounter++
                         }
                         return tableCounter++
                     })
-
                     this.setState({
-                        totalCapacity: capacityJSX.reduce((acc, cur) => {
-                            return acc + cur
-                        }, 0),
-                        currentCapacity: occupiedJSX.reduce((acc, cur) => {
-                            return acc + cur
-                        }, 0),
                         totalTables: tableCounter,
-                        occupiedTables: occupiedCounter
+                        occupiedTables: occupiedCounter,
+                        yelpRes: {
+                            name: `${searchLocation}`,
+                            rating: 4,
+                            price: '$$',
+                            display_phone: '+1 604-364-5290'
+                        },
+                        searchAddress0: '663 Granville St',
+                        searchAddress1: 'Vancouver, BC V4W 3G0',
+                        searchAddress2: 'Canada'
                     })
-                //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
                 })
-
         } else {
             axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.coordinates_lat},${this.state.coordinates_lng}&radius=50000&keyword=${searchLocation}&key=AIzaSyA2I6XCDGejIIrmrgMA0mLwKGOYQbGC-pg`)
                 .then((res) => {
@@ -96,25 +90,6 @@ class User extends Component {
 
         }
 
-
-        // axios.get('http://localhost:8080/getRestaurants')
-        // .then((res)=>{
-        //     res.data.map((restaurant)=>{
-        //         console.log(restaurant.name)
-        //         console.log(searchLocation)
-        //         // (restaurant.name===searchLocation)? console.log('hi') :
-        //         // console.log('bye')
-        //     })
-        // }) 
-
-
-
-
-        // (searchLocation==="yo") ? console.log('hi baby') :
-        // console.log('get lost')
-
-
-
     }
 
     componentWillMount() {
@@ -131,6 +106,14 @@ class User extends Component {
     }
 
     render() {
+
+        const restaurantStatus = (this.state.occupiedTables/this.state.totalTables===1) ? 
+            <div className="restoData col s12 m12 l12">"Sorry, we're full. Join the queue!" < i class="material-icons iconRed" > brightness_1</i ></div>: 
+            (this.state.occupiedTables / this.state.totalTables <= 0.65 ) ? 
+                <div className="restoData col s12 m12 l12">"We're taking customers. Come on in!" < i class="material-icons iconGreen" > brightness_1</i ></div> : <div className="restoData col s12 m12 l12">"We're almost full, try your luck!" < i class="material-icons iconYellow" > brightness_1</i ></div>
+            
+
+
         return (
             <div className="User">
                 <div className="row">
@@ -150,11 +133,6 @@ class User extends Component {
                                 lat: this.state.coordinates_lat,
                                 lng: this.state.coordinates_lng
                             }}>
-
-                            {/* <Marker
-                                name={'Your position'}
-                                position={{ lat: 49.28306734995162, lng: -123.11726121971797 }}
-                                 /> */}
 
                             <Marker
                                 name={'Dolores park'}
@@ -177,10 +155,7 @@ class User extends Component {
                         </div>
 
                         <div className="restoData col s12 m12 l12">
-                            Current status: (full / almost full / taking customers)<br />
-                            ___ tables of ___ available,<br />
-                            ___ tables of ___ available,<br />
-                            ___ tables of ___ available,<br />
+                            Current status: {restaurantStatus}
                         </div>
                     </div>
                 </div>
