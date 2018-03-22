@@ -63,6 +63,9 @@ class User extends Component {
                         searchAddress1: 'Vancouver, BC V4W 3G0',
                         searchAddress2: 'Canada'
                     })
+                    this.setState({
+                        searchLocation: ''
+                    })
                 })
         } else {
             axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.coordinates_lat},${this.state.coordinates_lng}&radius=50000&keyword=${searchLocation}&key=AIzaSyA2I6XCDGejIIrmrgMA0mLwKGOYQbGC-pg`)
@@ -135,6 +138,7 @@ class User extends Component {
                         </Map>
                     </div>
 
+                    { this.state.yelpRes.name ? (
                     <div className="apiBox col s12 m6 l6">
                         <div className="apiData col s12 m12 l12">
                             <h4>{this.state.yelpRes.name}</h4>
@@ -153,6 +157,8 @@ class User extends Component {
                             Current status: {restaurantStatus}
                         </div>
                     </div>
+                    ) : (<div>Search for a restaurant</div>)
+                }
                 </div>
             </div>
         );
