@@ -32,15 +32,12 @@ class User extends Component {
     }
 
     handleSearch = (searchLocation) => {
-
-        console.log(this.state.allRestaurants)
-        //!!!!!!!!!!!!!!!
-        if (this.state.restaurantNames.includes(searchLocation) 
-        //!!!!!!!!!!!!!!!
-        === true) {
+        let singleRest = this.state.restaurantNames.filter(restaurant=>restaurant.toLowerCase().includes(searchLocation))
+        
+        if (this.state.restaurantNames.includes(singleRest[0])) {
             console.log('hi there')
             axios.post("http://localhost:8080/getTables", {
-                name: searchLocation
+                name: singleRest[0]
             })
                 .then((response) => {
                     console.log(response.data)
@@ -57,7 +54,7 @@ class User extends Component {
                         totalTables: tableCounter,
                         occupiedTables: occupiedCounter,
                         yelpRes: {
-                            name: `${searchLocation}`,
+                            name: `${singleRest[0]}`,
                             rating: 4,
                             price: '$$',
                             display_phone: '+1 604-364-5290'
@@ -87,9 +84,7 @@ class User extends Component {
                         searchLocation: ''
                     })
                 })
-
         }
-
     }
 
     componentWillMount() {
