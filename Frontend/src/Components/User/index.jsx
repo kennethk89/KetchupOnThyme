@@ -32,8 +32,8 @@ class User extends Component {
     }
 
     handleSearch = (searchLocation) => {
-        let singleRest = this.state.restaurantNames.filter(restaurant=>restaurant.toLowerCase().includes(searchLocation))
-        
+        let singleRest = this.state.restaurantNames.filter(restaurant => restaurant.toLowerCase().includes(searchLocation))
+
         if (this.state.restaurantNames.includes(singleRest[0])) {
             console.log('hi there')
             axios.post("http://localhost:8080/getTables", {
@@ -105,11 +105,11 @@ class User extends Component {
 
     render() {
 
-        const restaurantStatus = (this.state.occupiedTables/this.state.totalTables===1) ? 
-            <div className="restoData col s12 m12 l12">"Sorry, we're full. Join the queue!" < i class="material-icons iconRed" > brightness_1</i ></div>: 
-            (this.state.occupiedTables / this.state.totalTables <= 0.65 ) ? 
+        const restaurantStatus = (this.state.occupiedTables / this.state.totalTables === 1) ?
+            <div className="restoData col s12 m12 l12">"Sorry, we're full. Join the queue!" < i class="material-icons iconRed" > brightness_1</i ></div> :
+            (this.state.occupiedTables / this.state.totalTables <= 0.65) ?
                 <div className="restoData col s12 m12 l12">"We're taking customers. Come on in!" < i class="material-icons iconGreen" > brightness_1</i ></div> : <div className="restoData col s12 m12 l12">"We're almost full, try your luck!" < i class="material-icons iconYellow" > brightness_1</i ></div>
-            
+
 
 
         return (
@@ -138,29 +138,29 @@ class User extends Component {
                         </Map>
                     </div>
 
-                    { this.state.yelpRes.name ? (
-                    <div className="apiBox col s12 m6 l6">
-                        <div className="apiData col s12 m12 l12">
-                            <h4>{this.state.yelpRes.name}</h4>
-                            Rating: <p className="yelpInfo">{this.state.yelpRes.rating}</p>
+                    {this.state.yelpRes.name ? (
+                        <div className="apiBox col s12 m6 l6">
+                            <div className="apiData col s12 m12 l12">
+                                <h4>{this.state.yelpRes.name}</h4>
+                                Rating: <p className="yelpInfo">{this.state.yelpRes.rating}</p>
+                                <br />
+                                Price: <p className="yelpInfo">{this.state.yelpRes.price}</p>
+                                <br />
+                                Call: <p className="yelpInfo">{this.state.yelpRes.display_phone}</p>
+                                <br />
+                                Address: <p className="yelpInfo">{this.state.searchAddress0}</p>
+                                <p className="yelpInfo">{this.state.searchAddress1}</p>
+                                <p className="yelpInfo">{this.state.searchAddress2}</p>
+                            </div>
 
-                            Price: <p className="yelpInfo">{this.state.yelpRes.price}</p>
-
-                            Call: <p className="yelpInfo">{this.state.yelpRes.display_phone}</p>
-
-                            Address: <p className="yelpInfo">{this.state.searchAddress0}</p>
-                            <p className="yelpInfo">{this.state.searchAddress1}</p>
-                            <p className="yelpInfo">{this.state.searchAddress2}</p>
+                            <div className="restoData">
+                                <div className="statusInfo col s12 m12 l12">
+                                    Current status: <span>{restaurantStatus}</span>
+                                </div>
+                            </div>
                         </div>
-
-                        <div className="restoData">
-                        <div className="statusInfo col s12 m12 l12">
-                                Current status: <span>{restaurantStatus}</span>
-                        </div>
-                    </div>
-                    </div>
                     ) : (<div className="landingPage">Look up a place</div>)
-                }
+                    }
                 </div>
             </div>
         );
