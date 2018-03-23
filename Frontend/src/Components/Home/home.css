@@ -1,3 +1,28 @@
+body {
+    background: #88292F;
+}
+
+.hero {
+    color: white;
+}
+
 .Home {
-    display: inline-block;
+    background-color: #88292F;
+}
+
+.user-button {
+    background-color: #D8C99Bed;
+}
+
+.owner-button {
+    background-color: #D8973C
+}
+
+.btn-large {
+    height: 86px;
+    line-height: 85px;
+}
+
+a {
+    color: #273E47;
 }

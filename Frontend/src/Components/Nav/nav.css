@@ -1,5 +1,5 @@
 #Logo {
-    width: 6%;
+    width: 45%;
 }
 
 .Nav {
@@ -7,6 +7,11 @@
     margin: 0px;
 }
 
+.App-header {
+    height: 12rem;
+    background-color: #88292F;
+}
+
 .App-title {
-    font-size: 60px
+font-family: 'Rammetto One', cursive;
 }

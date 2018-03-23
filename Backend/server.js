@@ -53,6 +53,19 @@ app.post('/createRestaurant', (req, res) => {
         })
 })
 
+app.post('/createTable', (req, res) => {
+    let newTable = new Table({
+        Restaurant_id: req.body.Restaurant_id,
+        total_pax: req.body.total_pax,
+        current_pax: req.body.current_pax
+    })
+    newTable.save()
+        .then((newTable) => {
+            res.json(newTable.attributes)
+        })
+})
+
+
 app.post('/ownerFilter', (req, res) => {
     Restaurant
         .where({ id: req.body.id })
@@ -90,19 +103,6 @@ app.post('/opFilter', (req, res) => {
         })
 })
 
-
-
-app.post('/createTable', (req, res) => {
-    let newTable = new Table({
-        Restaurant_id: req.body.Restaurant_id,
-        total_pax: req.body.total_pax,
-        current_pax: req.body.current_pax
-    })
-    newTable.save()
-        .then((newTable) => {
-            res.json(newTable.attributes)
-        })
-})
 
 //READ
 app.get('/', (req, res) => {

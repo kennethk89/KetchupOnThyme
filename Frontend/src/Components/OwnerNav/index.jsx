@@ -20,7 +20,7 @@ class OwnerNav extends Component {
 
   render() {
     let restaurantsJSX = this.state.restaurants.map((restaurant, i) => {
-      return <div className="indvButton"><a className="waves-effect grey darken-3 btn"><i class="material-icons left">local_dining</i><Link to={`/owner/${restaurant.id}/`}>{restaurant.name}</Link></a></div >
+      return <div className="indvButton"><a className="ownerButton waves-effect btn"><i class="material-icons left">local_dining</i><Link to={`/owner/${restaurant.id}/`}>{restaurant.name}</Link></a></div >
     })
 
     return (

@@ -133,15 +133,15 @@ class Ops extends Component {
     return (
       <div className="Ops">
         <header className="Ops-header">
-          <h2 className="Ops-title">Operations Page</h2>
-          <h5>{this.state.restaurantName}, {restId}</h5>
+          <h2 className="Ops-title opsWords">Operations Page</h2>
+          <h5 className="opsWords">{this.state.restaurantName}</h5>
         </header>
 
         <div className="restoInfo">
-          <p className="info">Total tables: {this.state.opTotalTables}</p>
-          <p className="info">Tables occupied: {this.state.opOccupiedTables}</p>
-          <p className="info">Total capacity: {this.state.opTotalCapacity}</p>
-          <p className="info">Current capacity: {this.state.opCurrentCapacity}</p>
+          <p className="info opsWords">Total tables: {this.state.opTotalTables}</p>
+          <p className="info opsWords">Tables occupied: {this.state.opOccupiedTables}</p>
+          <p className="info opsWords">Total capacity: {this.state.opTotalCapacity}</p>
+          <p className="info opsWords">Current capacity: {this.state.opCurrentCapacity}</p>
         </div>
 
  

@@ -8,7 +8,8 @@ class Owner extends Component {
         owTotalTables: 0,
         owOccupiedTables: 0,
         owTotalCapacity: 0,
-        owCurrentCapacity: 0
+        owCurrentCapacity: 0,
+        restName: ''
     }
 
 
@@ -17,6 +18,7 @@ class Owner extends Component {
             id: this.props.match.params.restId
         })
             .then((response) => {
+                console.log(response.data[0].name)
                 let tableCounter = 0
                 let occupiedCounter = 0
 
@@ -41,7 +43,8 @@ class Owner extends Component {
                         return acc + cur
                     }, 0),
                     owTotalTables: tableCounter,
-                    owOccupiedTables: occupiedCounter
+                    owOccupiedTables: occupiedCounter,
+                    restName: response.data[0].name
                 })
             })
     }
@@ -85,20 +88,20 @@ class Owner extends Component {
         const capPercent = Math.ceil((this.state.owCurrentCapacity / this.state.owTotalCapacity) * 100)
         return (
             <div className="owner">
-                <header className="Owner-header col-12">
-                    <h2 className="Owner-title">Owner Page, {restId}</h2>
+                <header className="Owner-header oInfo col-12">
+                    <h2 className="Owner-title">{this.state.restName}</h2>
                 </header>
 
-                <p className="ownerInfo">Your restaurant is currently {capPercent}% full</p>
-                <p className="ownerInfo">Total tables: {this.state.owTotalTables}</p>
-                <p className="ownerInfo">Tables occupied: {this.state.owOccupiedTables}</p>
-                <p className="ownerInfo">Total capacity: {this.state.owTotalCapacity}</p>
-                <p className="ownerInfo">Current capacity: {this.state.owCurrentCapacity}</p>
+                <p className="ownerInfo oInfo">Your restaurant is currently {capPercent}% full</p>
+                <p className="ownerInfo oInfo">Total tables: {this.state.owTotalTables}</p>
+                <p className="ownerInfo oInfo">Tables occupied: {this.state.owOccupiedTables}</p>
+                <p className="ownerInfo oInfo">Total capacity: {this.state.owTotalCapacity}</p>
+                <p className="ownerInfo oInfo">Current capacity: {this.state.owCurrentCapacity}</p>
                 
                 {/* <button onClick={this.props.makeRest}>make new restaurant</button>
                 <button onClick={this.props.makeTable}>get the table!</button> */}
 
-                <Link to={`/ops/${restId}`}><button className="waves-effect waves-light btn">Go to ops</button></Link>
+                <Link to={`/ops/${restId}`}><button className="ownerPageButton waves-effect waves-light btn">Go to ops</button></Link>
 
             </div>
         )

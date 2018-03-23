@@ -1,26 +1,37 @@
 .gMap {
     border-width: 1px;
-    border-style: solid;
     padding: 200px;
     display: inline-block;
 }
 
+.User-title {
+    color: white;
+}
+
+.landingPage {
+    color: white;
+}
+
+input {
+    color: white;
+}
+
 .apiBox {
-    border-width: 1px;
-    border-style: solid;
     padding: 0px;
     margin: 0px;
 }
 
 .apiData {
-    border-width: 1px;
-    border-style: solid;
     margin-bottom: 10px;
+    color: white;
+}
+
+.statusInfo {
+    margin-top: 100px;
 }
 
 .restoData {
-    border-width: 1px;
-    border-style: solid;
+    color: white;
 }
 
 .yelpInfo {

@@ -7,7 +7,7 @@ class Nav extends Component {
         return (
             <div className="container-fluid Nav">
                 <header className="App-header">
-                    <Link to='/'><img id="Logo" src='/Images/Logo/ketchup.jpg' alt="sorry" /></Link><h1 className="App-title">KETCHUP ON THYME</h1>
+                    <Link to='/'><img id="Logo" src='/Images/Logo/lolologo.png' alt="sorry" /></Link>
                 </header>
 
             </div>

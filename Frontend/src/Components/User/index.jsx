@@ -116,7 +116,7 @@ class User extends Component {
             <div className="User">
                 <div className="row">
                     <div className="col s12 m12 l12">
-                        <h2 className="User-title">User Page</h2>
+                        <h2 className="User-title">Hungry?</h2>
                     </div>
 
                     <label>Search for Restaurants</label>
@@ -153,11 +153,13 @@ class User extends Component {
                             <p className="yelpInfo">{this.state.searchAddress2}</p>
                         </div>
 
-                        <div className="restoData col s12 m12 l12">
-                            Current status: {restaurantStatus}
+                        <div className="restoData">
+                        <div className="statusInfo col s12 m12 l12">
+                                Current status: <span>{restaurantStatus}</span>
                         </div>
                     </div>
-                    ) : (<div>Search for a restaurant</div>)
+                    </div>
+                    ) : (<div className="landingPage">Look up a place</div>)
                 }
                 </div>
             </div>
