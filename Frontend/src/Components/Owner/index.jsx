@@ -12,6 +12,18 @@ class Owner extends Component {
         restName: ''
     }
 
+    //parse capacities above instead of chaining after component mounts
+    parseTotalCapacity(data) {
+        let thing = data.map((table, i) => {
+            return table.total_pax
+        })
+
+        return thing.reduce((acc, cur) => {
+            return acc + cur
+        }, 0)
+
+    }
+
 
     componentWillMount() {
         axios.post("http://localhost:8080/ownerFilter", {
@@ -22,9 +34,8 @@ class Owner extends Component {
                 let tableCounter = 0
                 let occupiedCounter = 0
 
-                let ownerCapacityJSX = response.data.map((table, i) => {
-                    return table.total_pax
-                })
+                let owTotalCapacity = this.parseTotalCapacity(response.data)
+
                 let ownerOccupiedJSX = response.data.map((table, i) => {
                     return table.current_pax
                 })
@@ -36,9 +47,7 @@ class Owner extends Component {
                 })
 
                 this.setState({
-                    owTotalCapacity: ownerCapacityJSX.reduce((acc, cur) => {
-                        return acc + cur
-                    }, 0),
+                    owTotalCapacity: owTotalCapacity,
                     owCurrentCapacity: ownerOccupiedJSX.reduce((acc, cur) => {
                         return acc + cur
                     }, 0),
