@@ -13,6 +13,9 @@ const bookshelf = require('bookshelf')(knex)
 const yelp = require('yelp-fusion');
 const client = yelp.client('RaYrtt0iSkBHwTvsj40uxo0hg8tLulmiyg9EpnPaXM14FG4foZ-j91rhiCLUiSma3VNKpHF0kyRBfeNFHwTdTyV4jJu2brk9M5aCwEElkCR0aYA_NrSRStAWzHOxWnYx');
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+}
 
 const Restaurant = bookshelf.Model.extend({
     tableName: 'Restaurants',
