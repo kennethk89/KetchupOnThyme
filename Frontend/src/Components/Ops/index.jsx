@@ -13,7 +13,7 @@ class Ops extends Component {
   }
 
   componentWillMount() {
-    axios.post("http://localhost:8080/opFilter", {
+    axios.post("http://localhost:8080/api/opFilter", {
       id: this.props.match.params.restId
     })
       .then((response) => {
@@ -53,14 +53,14 @@ class Ops extends Component {
     console.log('update table')
     console.log(`updated pax: ${updatedPax}, table id: ${tableId}, restaurant id: ${restId}`)
     console.log(icol)
-    axios.put("http://localhost:8080/update", {
+    axios.put("http://localhost:8080/api/update", {
       updatedPax: updatedPax,
       tableId: tableId,
       restId: restId
     })
       .then((response) => {
         this.state.tableInfo[i].current_pax = response.data.current_pax
-        axios.post("http://localhost:8080/opFilter", {
+        axios.post("http://localhost:8080/api/opFilter", {
           id: this.props.match.params.restId
         })
           .then((response) => {
@@ -93,12 +93,12 @@ class Ops extends Component {
   clearTable = (tableId, i) => {
     console.log('clear table')
     console.log(`table id: ${tableId}`)
-    axios.put("http://localhost:8080/clear", {
+    axios.put("http://localhost:8080/api/clear", {
       tableId: tableId
     })
       .then((response) => {
         this.state.tableInfo[i].current_pax = response.data.current_pax
-        axios.post("http://localhost:8080/opFilter", {
+        axios.post("http://localhost:8080/api/opFilter", {
           id: this.props.match.params.restId
         })
           .then((response) => {

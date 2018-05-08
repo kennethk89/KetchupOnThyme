@@ -19,7 +19,7 @@ class App extends Component {
   }
 
   makeRest = () => {
-    axios.post("http://localhost:8080/createRestaurant", {
+    axios.post("http://localhost:8080/api/createRestaurant", {
       name: (faker.fake("{{company.companyName}}")),
       address: (faker.fake("{{address.streetAddress}}, {{address.city}}, {{address.zipCode}}")),
       hours: '11am-9pm'
@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   makeTable = () => {
-    axios.post("http://localhost:8080/createTable", {
+    axios.post("http://localhost:8080/api/createTable", {
       Restaurant_id: Math.ceil(Math.random() * 5),
       total_pax: 6,
       current_pax: Math.ceil(Math.random() * 6)
@@ -41,7 +41,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    axios.get("http://localhost:8080")
+    axios.get("http://localhost:8080/api")
       .then((response) => {
         console.log(response.data)
 

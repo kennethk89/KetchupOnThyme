@@ -36,7 +36,7 @@ class User extends Component {
 
         if (this.state.restaurantNames.includes(singleRest[0])) {
             console.log('hi there')
-            axios.post("http://localhost:8080/getTables", {
+            axios.post("http://localhost:8080/api/getTables", {
                 name: singleRest[0]
             })
                 .then((response) => {
@@ -70,7 +70,7 @@ class User extends Component {
         } else {
             axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.coordinates_lat},${this.state.coordinates_lng}&radius=50000&keyword=${searchLocation}&key=AIzaSyA2I6XCDGejIIrmrgMA0mLwKGOYQbGC-pg`)
                 .then((res) => {
-                    axios.post('http://localhost:8080/yelpSearch', {
+                    axios.post('http://localhost:8080/api/yelpSearch', {
                         searchLocation: searchLocation,
                     })
                         .then((response) => {
@@ -91,7 +91,7 @@ class User extends Component {
     }
 
     componentWillMount() {
-        axios.get('http://localhost:8080/getRestaurants')
+        axios.get('http://localhost:8080/api/getRestaurants')
             .then((res) => {
                 let namesJSX = res.data.map((store, i) => {
                     return store.name

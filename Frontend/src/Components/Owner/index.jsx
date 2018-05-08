@@ -26,7 +26,7 @@ class Owner extends Component {
 
 
     componentWillMount() {
-        axios.post("http://localhost:8080/ownerFilter", {
+        axios.post("http://localhost:8080/api/ownerFilter", {
             id: this.props.match.params.restId
         })
             .then((response) => {
@@ -59,7 +59,7 @@ class Owner extends Component {
     }
 
     componentDidUpdate() {
-        axios.post("http://localhost:8080/ownerFilter", {
+        axios.post("http://localhost:8080/api/ownerFilter", {
             id: this.props.match.params.restId
         })
             .then((response) => {
