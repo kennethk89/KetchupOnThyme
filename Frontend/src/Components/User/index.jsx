@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
+import { Map, Marker, GoogleApiWrapper } from 'google-maps-react';
 import './user.css'
 import axios from 'axios'
 
@@ -70,6 +70,7 @@ class User extends Component {
         } else {
             axios.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${this.state.coordinates_lat},${this.state.coordinates_lng}&radius=50000&keyword=${searchLocation}&key=AIzaSyA2I6XCDGejIIrmrgMA0mLwKGOYQbGC-pg`)
                 .then((res) => {
+                    console.log(res)
                     axios.post('http://localhost:8080/api/yelpSearch', {
                         searchLocation: searchLocation,
                     })
@@ -91,7 +92,7 @@ class User extends Component {
     }
 
     componentWillMount() {
-        axios.get('http://localhost:8080/api/getRestaurants')
+        axios.post('http://localhost:8080/api/getRestaurants')
             .then((res) => {
                 let namesJSX = res.data.map((store, i) => {
                     return store.name

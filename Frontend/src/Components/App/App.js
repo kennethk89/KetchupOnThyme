@@ -41,7 +41,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    axios.get("http://localhost:8080/api")
+    axios.post("http://localhost:8080/api/")
       .then((response) => {
         console.log(response.data)
 

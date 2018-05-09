@@ -9,7 +9,7 @@ class OwnerNav extends Component {
   }
 
   componentWillMount() {
-    axios.get("http://localhost:8080/api/getRestaurants")
+    axios.post("http://localhost:8080/api/getRestaurants")
       .then((response) => {
         this.setState({
           restaurants: response.data
