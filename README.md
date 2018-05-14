@@ -1,7 +1,7 @@
-This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
-
-Below you will find some information on how to perform common tasks.<br>
-You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
+Ketchup on Thyme is a data-centric, web application that provide users with live data on
+the occupancy of a restaurant at any given time. To make this work, customers and
+restaurants would have to be using the same application and the app’s data would be
+created and destroyed by restaurant hosts as customers enter or leave the restaurant.
 
 ## Table of Contents
 
