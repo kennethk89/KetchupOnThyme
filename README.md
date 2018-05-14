@@ -13,7 +13,7 @@ the next 15 minutes. Ketchup on Thyme recognizes that your thyme is important, t
 more you walk around, frustrations increases, hope shimmers away, the less you
 ketchup.
 
-## TECH STACK AND APIs
+## Tech Stack and APIs
 Ketchup on Thyme was created using the following web technologies:
 * PostgreSQL database
 * Express
