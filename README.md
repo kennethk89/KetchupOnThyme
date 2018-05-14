@@ -1,7 +1,8 @@
-Ketchup on Thyme is a data-centric, web application that provide users with live data on
-the occupancy of a restaurant at any given time. To make this work, customers and
-restaurants would have to be using the same application and the app’s data would be
-created and updated on the fly by the restaurant's host as customers enter or leave the restaurant.
+# KETCHUP ON THYME 
+
+This project was submitted as my final project after a 10 weeks web-development bootcamp at BrainStation Vancouver.
+
+Ketchup on Thyme uses the MVC model that shows two different views and controllers depending on whether you're a user or restaurant staff, these two views essentially takes data from the same database. The app aims to provide users with live data on restaurants' seating occupancy based on a search input by the users - at the same time, seating capacity is being created and updated by hosts of the respective restaurants.
 
 ## Problem
 
